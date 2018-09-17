@@ -48,7 +48,7 @@ RUN mkdir -p /opt/etc && \
     cp -a --parents /usr/sbin/varnishd /opt && \
     cp -a --parents /etc/varnish /opt
 
-FROM gcr.io/distroless/base:debug
+FROM gcr.io/distroless/base
 
 COPY --from=0 /opt /
 COPY --from=0 /bin/sh /bin/sh
