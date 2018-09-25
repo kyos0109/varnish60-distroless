@@ -1,10 +1,10 @@
-FROM debian:9.5
+FROM debian:9.5-slim
 
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 ARG TIME_ZONE
 
 RUN apt-get update && \
-	apt-get install curl -y && \
+	apt-get install curl libcap-dev -y && \
 	curl -s https://packagecloud.io/install/repositories/varnishcache/varnish60/script.deb.sh | bash && \
 	apt-get update && \
 	apt-get install varnish -y && \
@@ -13,9 +13,9 @@ RUN apt-get update && \
 	rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN mkdir -p /opt/etc && \
-	cp /usr/share/zoneinfo/${TIME_ZONE:-ROC} /opt/etc/localtime && \
-	cp -a --parents /usr/bin/varnish* /opt && \
-	cp -aL --parents /usr/bin/gcc* /opt && \
+    cp /usr/share/zoneinfo/${TIME_ZONE:-ROC} /opt/etc/localtime && \
+    cp -a --parents /usr/bin/varnish* /opt && \
+    cp -aL --parents /usr/bin/gcc* /opt && \
     cp -aL --parents /usr/bin/as /opt && \
     cp -aL --parents /usr/bin/ld /opt && \
     cp -a --parents /usr/lib/libvarnishapi.so.* /opt && \
@@ -46,6 +46,7 @@ RUN mkdir -p /opt/etc && \
     cp -a --parents /lib/x86_64-linux-gnu/libbsd.so.* /opt && \
     cp -a --parents /usr/lib/varnish /opt && \
     cp -a --parents /usr/sbin/varnishd /opt && \
+    cp -a --parents /bin/rm /opt && \
     cp -a --parents /etc/varnish /opt
 
 FROM gcr.io/distroless/base
@@ -53,8 +54,8 @@ FROM gcr.io/distroless/base
 COPY --from=0 /opt /
 COPY --from=0 /bin/sh /bin/sh
 
-VOLUME /var/lib/varnish
+ENTRYPOINT [ "varnishd", "-F", "-n", "/tmp", "-T", ":6802" ]
 
-ENTRYPOINT [ "varnishd", "-F" ]
+EXPOSE 6802
 
 CMD [ "-h" ]
