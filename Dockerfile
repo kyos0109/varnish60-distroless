@@ -16,6 +16,7 @@ RUN mkdir -p /opt/etc && mkdir -p /opt/var/lib/varnish && \
     cp /usr/share/zoneinfo/${TIME_ZONE:-ROC} /opt/etc/localtime && \
     cp -a /lib/terminfo/x /usr/share/terminfo/x && \
     cp -a --parents /usr/bin/varnish* /opt && \
+    cp -aL --parents /bin/cp /opt && \
     cp -aL --parents /usr/bin/gcc* /opt && \
     cp -aL --parents /usr/bin/as /opt && \
     cp -aL --parents /usr/bin/ld /opt && \
