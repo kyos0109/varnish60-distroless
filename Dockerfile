@@ -46,6 +46,9 @@ RUN mkdir -p /opt/etc && mkdir -p /opt/var/lib/varnish && \
     cp -a --parents /lib/x86_64-linux-gnu/libuuid* /opt && \
     cp -a --parents /lib/x86_64-linux-gnu/libgcc_s* /opt && \
     cp -a --parents /lib/x86_64-linux-gnu/libbsd.so.* /opt && \
+    cp -a --parents /lib/x86_64-linux-gnu/libselinux.so.* /opt && \
+    cp -a --parents /lib/x86_64-linux-gnu/libacl.so.* /opt && \
+    cp -a --parents /lib/x86_64-linux-gnu/libattr.so.* /opt && \
     cp -a --parents /usr/lib/varnish /opt && \
     cp -a --parents /usr/sbin/varnishd /opt && \
     cp -a --parents /bin/rm /opt && \
