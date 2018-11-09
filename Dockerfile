@@ -12,8 +12,9 @@ RUN apt-get update && \
 	apt-get autoremove --yes && \
 	rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN mkdir -p /opt/etc && \
+RUN mkdir -p /opt/etc && mkdir -p /opt/var/lib/varnish && \
     cp /usr/share/zoneinfo/${TIME_ZONE:-ROC} /opt/etc/localtime && \
+    cp -a /lib/terminfo/x /usr/share/terminfo/x && \
     cp -a --parents /usr/bin/varnish* /opt && \
     cp -aL --parents /usr/bin/gcc* /opt && \
     cp -aL --parents /usr/bin/as /opt && \
@@ -47,6 +48,7 @@ RUN mkdir -p /opt/etc && \
     cp -a --parents /usr/lib/varnish /opt && \
     cp -a --parents /usr/sbin/varnishd /opt && \
     cp -a --parents /bin/rm /opt && \
+    cp -a --parents /usr/share/terminfo/x /opt && \
     cp -a --parents /etc/varnish /opt
 
 FROM gcr.io/distroless/base
@@ -54,8 +56,6 @@ FROM gcr.io/distroless/base
 COPY --from=0 /opt /
 COPY --from=0 /bin/sh /bin/sh
 
-ENTRYPOINT [ "varnishd", "-F", "-n", "/tmp", "-T", ":6802" ]
-
-EXPOSE 6802
+ENTRYPOINT [ "varnishd", "-F" ]
 
 CMD [ "-h" ]
