@@ -16,7 +16,6 @@ RUN mkdir -p /opt/etc && mkdir -p /opt/var/lib/varnish && \
     cp /usr/share/zoneinfo/${TIME_ZONE:-ROC} /opt/etc/localtime && \
     cp -a /lib/terminfo/x /usr/share/terminfo/x && \
     cp -a --parents /usr/bin/varnish* /opt && \
-    cp -aL --parents /bin/cp /opt && \
     cp -aL --parents /usr/bin/gcc* /opt && \
     cp -aL --parents /usr/bin/as /opt && \
     cp -aL --parents /usr/bin/ld /opt && \
@@ -46,9 +45,6 @@ RUN mkdir -p /opt/etc && mkdir -p /opt/var/lib/varnish && \
     cp -a --parents /lib/x86_64-linux-gnu/libuuid* /opt && \
     cp -a --parents /lib/x86_64-linux-gnu/libgcc_s* /opt && \
     cp -a --parents /lib/x86_64-linux-gnu/libbsd.so.* /opt && \
-    cp -a --parents /lib/x86_64-linux-gnu/libselinux.so.* /opt && \
-    cp -a --parents /lib/x86_64-linux-gnu/libacl.so.* /opt && \
-    cp -a --parents /lib/x86_64-linux-gnu/libattr.so.* /opt && \
     cp -a --parents /usr/lib/varnish /opt && \
     cp -a --parents /usr/sbin/varnishd /opt && \
     cp -a --parents /bin/rm /opt && \
